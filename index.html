@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expression to Machine Code Translator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Expression to Machine Code Translator</h1>
+
+  <!-- Input Section -->
+  <div class="container">
+    <h2>Enter Expression</h2>
+    <p>Enter an expression (with assignment). Example: <code>a = b + c * d</code></p>
+    <input type="text" id="expression" placeholder="Enter expression...">
+    <button onclick="generateAllCodes()">Generate All Codes</button>
+  </div>
+
+  <!-- Three-Address Code Output -->
+  <div class="container" id="threeAddrContainer">
+    <h2>Three-Address Code</h2>
+    <pre id="output-3addr"></pre>
+  </div>
+
+  <!-- Two-Address Code Output -->
+  <div class="container" id="twoAddrContainer">
+    <h2>Two-Address Code</h2>
+    <pre id="output-2addr"></pre>
+  </div>
+
+  <!-- One-Address Code Output -->
+  <div class="container" id="oneAddrContainer">
+    <h2>One-Address Code</h2>
+    <pre id="output-1addr"></pre>
+  </div>
+
+  <!-- Zero-Address Code Output -->
+  <div class="container" id="zeroAddrContainer">
+    <h2>Zero-Address Code</h2>
+    <pre id="output-0addr"></pre>
+  </div>
+
+  <!-- RISC Code Output -->
+  <div class="container" id="riscContainer">
+    <h2>RISC Code</h2>
+    <pre id="output-risc"></pre>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
