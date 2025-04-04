@@ -1,4 +1,4 @@
-/********** Three-Address Code Functions **********/
+// Three-Address Code Functions 
 function isOperator(c) {
     return ['+', '-', '*', '/', '='].includes(c);
 }
@@ -28,6 +28,7 @@ function tokenize3(exp) {
     if (current !== "") tokens.push(current);
     return tokens;
 }
+
 function infixToPostfix(exp) {
     let output = [];
     let stack = [];
@@ -93,7 +94,7 @@ function generateInstructions3(postfix, target) {
     return instructions;
 }
 
-/********** Two-Address Code Functions **********/
+//  Two-Address Code Functions 
 
 function generateTwoAddressCode2(postfix) {
     let instructions = [];
@@ -141,7 +142,7 @@ function annotateInstruction2(instr) {
     return instr + "    " + annotation;
 }
 
-/********** One-Address Code Functions **********/
+// One-Address Code Functions 
 
 function generateOneAddressCode1(postfix) {
     let instructions = [];
@@ -227,7 +228,7 @@ function generateZeroAddressCode0(postfix) {
     return instructions;
 }
 
-/********** RISC Code Functions **********/
+// RISC Code Functions 
 
 function generateRISCCode(postfix) {
     let instructions = [];
@@ -258,11 +259,12 @@ function generateRISCCode(postfix) {
 /********** Combined Generator **********/
 function generateAllCodes() {
     let exprInput = document.getElementById("expression").value.trim();
+    
     if (!exprInput) {
         alert("Please enter an expression.");
         return;
     }
-    // Ensure the expression is of the form LHS = RHS
+    
     let parts = exprInput.split("=");
     if (parts.length !== 2) {
         alert("Please provide an expression in the form: LHS = RHS");
@@ -271,12 +273,12 @@ function generateAllCodes() {
     let lhs = parts[0].trim();
     let rhs = parts[1].trim();
 
-    // --- Three-Address Code ---
+    //  Three-Address Code 
     let postfix3 = infixToPostfix(rhs);
     let threeAddrInstructions = generateInstructions3(postfix3, lhs);
     document.getElementById("output-3addr").textContent = threeAddrInstructions.join("\n");
 
-    // --- Two-Address Code ---
+    // Two-Address Code 
     let postfix2 = infixToPostfix(rhs);
     let twoAddrResult = generateTwoAddressCode2(postfix2);
     let twoAddrInstructions = twoAddrResult.code;
@@ -284,20 +286,20 @@ function generateAllCodes() {
     let annotatedTwoAddr = twoAddrInstructions.map(instr => annotateInstruction2(instr));
     document.getElementById("output-2addr").textContent = annotatedTwoAddr.join("\n");
 
-    // --- One-Address Code ---
+    // One-Address Code 
     let postfix1 = infixToPostfix(rhs);
     let oneAddrInstructions = generateOneAddressCode1(postfix1);
     oneAddrInstructions.push("STORE " + lhs);
     let annotatedOneAddr = oneAddrInstructions.map(instr => annotateInstruction1(instr));
     document.getElementById("output-1addr").textContent = annotatedOneAddr.join("\n");
 
-    // --- Zero-Address Code ---
+    // Zero-Address Code 
     let postfix0 = infixToPostfix(rhs);
     let zeroAddrInstructions = generateZeroAddressCode0(postfix0);
     zeroAddrInstructions.push(`POP ${lhs}     M[${lhs}] <- TOS`);
     document.getElementById("output-0addr").textContent = zeroAddrInstructions.join("\n");
 
-    // --- RISC Code ---
+    // RISC Code 
     let postfixRISC = infixToPostfix(rhs);
     let riscResult = generateRISCCode(postfixRISC);
     let riscInstructions = riscResult.instructions;
